@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="hy">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Ինտերակտիվ 3D Գունդ</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <style>
+      html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden; /* Կանխում է scroll-ը ինտերակտիվ էջում */
+      }
+    </style>
+  </head>
+  <body>
+    <div id="canvas-container"></div>
+
+    <header id="interactive-header">
+      <h1>🌐 Ինտերակտիվ 3D Մոդել</h1>
+      <nav>
+        <a href="/">📚 Տեսություն</a>
+        <a href="/interactive" class="active">🎮 Ինտերակտիվ Մոդել</a>
+      </nav>
+    </header>
+
+    <div id="controls">
+      <div class="control-panel">
+        <fieldset>
+          <legend>📐 Հիմնական Պարամետրեր</legend>
+          <div class="control-group">
+            <label for="radius-slider">Շառավիղ:</label>
+            <input
+              type="range"
+              id="radius-slider"
+              min="0.5"
+              max="2.5"
+              value="1.5"
+              step="0.1"
+            />
+            <span class="value-display" id="radius-value">1.5</span>
+          </div>
+          <div class="control-group">
+            <label for="color-picker">Գույն:</label>
+            <input type="color" id="color-picker" value="#00d4ff" />
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>✨ Տեսք և Էֆեկտներ</legend>
+          <div class="control-group">
+            <label for="opacity-slider">Թափանցիկություն:</label>
+            <input
+              type="range"
+              id="opacity-slider"
+              min="0.1"
+              max="1"
+              value="1"
+              step="0.05"
+            />
+            <span class="value-display" id="opacity-value">100%</span>
+          </div>
+          <div class="control-group-row">
+            <label for="wireframe-toggle">Ցանցային ռեժիմ:</label>
+            <input type="checkbox" id="wireframe-toggle" />
+          </div>
+          <div class="control-group-row">
+            <label for="autorotate-toggle">Ավտո-պտույտ:</label>
+            <input type="checkbox" id="autorotate-toggle" checked />
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>🎮 Գործողություններ</legend>
+          <div class="actions">
+            <button id="reset-btn">🔄 Վերականգնել</button>
+            <button id="slice-btn">✂️ Հատույթ</button>
+            <button id="separate-btn">🔀 Բաժանել</button>
+            <div class="info-actions">
+              <!-- Գնդի մասերը ցուցադրող կոճակներ -->
+              <button class="info-btn" data-part="zone">Գոտի</button>
+              <button class="info-btn" data-part="layer">Շերտ</button>
+              <button class="info-btn" data-part="segment">Սեգմենտ</button>
+              <button class="info-btn" data-part="sector">Սեկտոր</button>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset id="slicing-controls" class="hidden">
+          <legend>✏️ Հատույթի Կառավարում</legend>
+          <div class="control-group">
+            <label for="slice-pos">Հարթության Դիրք</label>
+            <input
+              type="range"
+              id="slice-pos"
+              min="-1.5"
+              max="1.5"
+              value="0"
+              step="0.1"
+            />
+            <span class="value-display" id="slice-value">0.0</span>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+
+    <!-- Three.js և OrbitControls գրադարանների ներբեռնում -->
+    <script src="{{ url_for('static', filename='js/three.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/OrbitControls.js') }}"></script>
+    <!-- Հիմնական JavaScript ֆայլ -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  </body>
+</html>
