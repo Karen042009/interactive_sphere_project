@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="hy">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Ինտերակտիվ 3D Գունդ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="static/css/style.css" />
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            /* Կանխում է scroll-ը ինտերակտիվ էջում */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="canvas-container"></div>
+
+    <header id="interactive-header">
+        <div class="lang-switcher">
+            <button class="lang-btn" data-lang="hy">🇦🇲 HY</button>
+            <button class="lang-btn" data-lang="en">🇺🇸 EN</button>
+            <button class="lang-btn" data-lang="ru">🇷🇺 RU</button>
+        </div>
+        <h1 data-i18n="interactive_header">🌐 Ինտերակտիվ 3D Մոդել</h1>
+        <nav>
+            <a href="index.html" data-i18n="nav_theory">📚 Տեսություն</a>
+            <a href="interactive.html" class="active" data-i18n="nav_interactive">🎮 Ինտերակտիվ Մոդել</a>
+        </nav>
+        <button id="mobile-toggle-controls" class="mobile-toggle-btn">⚙️</button>
+    </header>
+
+    <div id="controls">
+        <div class="control-panel">
+            <div class="panel-toggle">
+                <button id="toggle-controls">✖</button>
+            </div>
+            <fieldset>
+                <legend data-i18n="params_legend">📐 Հիմնական Պարամետրեր</legend>
+                <div class="control-group">
+                    <label for="radius-slider" data-i18n="label_radius">Շառավիղ:</label>
+                    <input type="range" id="radius-slider" min="0.5" max="2.5" value="1.5" step="0.1" />
+                    <span class="value-display" id="radius-value">1.5</span>
+                </div>
+                <div class="control-group">
+                    <label for="color-picker" data-i18n="label_color">Գույն:</label>
+                    <input type="color" id="color-picker" value="#00d4ff" />
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend data-i18n="effects_legend">✨ Տեսք և Էֆեկտներ</legend>
+                <div class="control-group">
+                    <label for="opacity-slider" data-i18n="label_opacity">Թափանցիկություն:</label>
+                    <input type="range" id="opacity-slider" min="0.1" max="1" value="1" step="0.05" />
+                    <span class="value-display" id="opacity-value">100%</span>
+                </div>
+                <div class="control-group-row">
+                    <label for="wireframe-toggle" data-i18n="label_wireframe">Ցանցային ռեժիմ:</label>
+                    <input type="checkbox" id="wireframe-toggle" />
+                </div>
+                <div class="control-group-row">
+                    <label for="autorotate-toggle" data-i18n="label_autorotate">Ավտո-պտույտ:</label>
+                    <input type="checkbox" id="autorotate-toggle" checked />
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend data-i18n="actions_legend">🎮 Գործողություններ</legend>
+                <div class="actions">
+                    <button id="reset-btn" data-i18n="btn_reset">🔄 Վերականգնել</button>
+                    <button id="slice-btn" data-i18n="btn_slice">✂️ Հատույթ</button>
+                    <button id="separate-btn" data-i18n="btn_separate">🔀 Բաժանել</button>
+                    <div class="info-actions">
+                        <!-- Գնդի մասերը ցուցադրող կոճակներ -->
+                        <button class="info-btn" data-part="zone" data-i18n="btn_zone">Գոտի</button>
+                        <button class="info-btn" data-part="layer" data-i18n="btn_layer">Շերտ</button>
+                        <button class="info-btn" data-part="segment" data-i18n="btn_segment">Սեգմենտ</button>
+                        <button class="info-btn" data-part="sector" data-i18n="btn_sector">Սեկտոր</button>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend data-i18n="position_legend">↕️ ↔️ Դիրք</legend>
+                <div class="control-group-row">
+                    <button id="move-up-btn" class="action-btn" data-i18n="btn_up">⬆️ Վերև</button>
+                    <button id="move-down-btn" class="action-btn" data-i18n="btn_down">⬇️ Ներքև</button>
+                </div>
+                <div class="control-group-row">
+                    <button id="move-left-btn" class="action-btn" data-i18n="btn_left">⬅️ Ձախ</button>
+                    <button id="move-right-btn" class="action-btn" data-i18n="btn_right">➡️ Աջ</button>
+                </div>
+            </fieldset>
+
+            <fieldset id="slicing-controls" class="hidden">
+                <legend data-i18n="slicing_legend">✏️ Հատույթի Կառավարում</legend>
+                <div class="control-group">
+                    <label for="slice-pos" data-i18n="label_slice_pos">Հարթության Դիրք</label>
+                    <input type="range" id="slice-pos" min="-1.5" max="1.5" value="0" step="0.1" />
+                    <span class="value-display" id="slice-value">0.0</span>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+
+    <!-- Three.js և OrbitControls գրադարանների ներբեռնում -->
+    <script src="static/js/three.min.js"></script>
+    <script src="static/js/OrbitControls.js"></script>
+    <!-- Թարգմանությունների սկրիպտ -->
+    <script src="static/js/translations.js"></script>
+    <!-- Հիմնական JavaScript ֆայլ -->
+    <script src="static/js/main.js"></script>
+</body>
+
+</html>
