@@ -62,6 +62,15 @@ const translations = {
         "point_4": "Մաթեմատիկական ճշգրտությունը և իրական օրինակները միասին օգնում են ավելի լավ հասկանալ այս հասկացությունները",
         "footer": "&copy; 2025 | Ստեղծված է Գրիշա Խումարյանի և Կարեն Պողոսյանի կողմից | Գունդ և նրա մասերը",
 
+        // Bibliography
+        "bibliography_title": "📚 Օգտագործված գրականություն",
+        "bib_item_1": "Աթանասյան Լ. Ս. և ուրիշներ. <i>Երկրաչափություն 10</i>, Երևան: Աստղիկ գրատուն հրատարակչություն, 2001",
+        "bib_item_2": "Հակոբյան Ս. Է. <i>Երկրաչափություն 11</i>, Երևան: Զանգակ հրատարակչություն, 2025",
+        "bib_item_3": "",
+        "bib_item_4": "Weisstein, Eric W. <i>\"Sphere.\"</i> MathWorld - A Wolfram Web Resource. <a href=\"https://mathworld.wolfram.com/Sphere.html\" target=\"_blank\" rel=\"noopener\">https://mathworld.wolfram.com/Sphere.html</a>",
+        "bib_item_5": "",
+        "bib_item_6": "",
+
         // Interactive Page
         "interactive_title": "Ինտերակտիվ 3D Գունդ",
         "interactive_header": "🌐 Ինտերակտիվ 3D Մոդել",
@@ -151,7 +160,16 @@ const translations = {
         "point_2": "Formulas for all spherical parts depend on radius (R) and height (h)",
         "point_3": "Spherical shapes are widely common in nature and technology",
         "point_4": "Mathematical precision and real examples together help better understand these concepts",
-        "footer": "&copy; 2025 | Created for educational purposes | Sphere and its Parts",
+        "footer": "&copy; 2025 | Created by Grisha Khumaryan and Karen Poghosyan | Sphere and its Parts",
+
+        // Bibliography
+        "bibliography_title": "📚 References",
+        "bib_item_1": "Atanasyan L. S. et al. <i>Geometry 10</i>, Yerevan: Astghik gratun publishing, 2001",
+        "bib_item_2": "Hakobyan S. E. <i>Geometry 11</i>, Yerevan: Zangak publishing, 2025",
+        "bib_item_3": "",
+        "bib_item_4": "Weisstein, Eric W. <i>\"Sphere.\"</i> MathWorld - A Wolfram Web Resource. <a href=\"https://mathworld.wolfram.com/Sphere.html\" target=\"_blank\" rel=\"noopener\">https://mathworld.wolfram.com/Sphere.html</a>",
+        "bib_item_5": "",
+        "bib_item_6": "",
 
         // Interactive Page
         "interactive_title": "Interactive 3D Sphere",
@@ -242,7 +260,16 @@ const translations = {
         "point_2": "Формулы для всех частей шара зависят от радиуса (R) и высоты (h)",
         "point_3": "Сферические формы широко распространены в природе и технологиях",
         "point_4": "Математическая точность и реальные примеры вместе помогают лучше понять эти концепции",
-        "footer": "&copy; 2025 | Создано в образовательных целях | Сфера и её части",
+        "footer": "&copy; 2025 | Создано: Гриша Хумарян и Карен Погосян | Сфера и её части",
+
+        // Bibliography
+        "bibliography_title": "📚 Использованная литература",
+        "bib_item_1": "Атанасян Л. С. и др. <i>Геометрия 10</i>, Ереван: Астгик гратун издательство, 2001",
+        "bib_item_2": "Акопян С. Э. <i>Геометрия 11</i>, Ереван: Зангак издательство, 2025",
+        "bib_item_3": "",
+        "bib_item_4": "Weisstein, Eric W. <i>\"Sphere.\"</i> MathWorld - A Wolfram Web Resource. <a href=\"https://mathworld.wolfram.com/Sphere.html\" target=\"_blank\" rel=\"noopener\">https://mathworld.wolfram.com/Sphere.html</a>",
+        "bib_item_5": "",
+        "bib_item_6": "",
 
         // Interactive Page
         "interactive_title": "Интерактивный 3D Шар",
