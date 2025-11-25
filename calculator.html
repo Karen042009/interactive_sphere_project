@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="hy">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Հաշվիչ - Գունդ և նրա մասերը</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="static/css/style.css" />
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+</head>
+
+<body>
+    <div class="container theoretical-page fullscreen-page">
+        <header>
+            <div class="lang-switcher">
+                <button class="lang-btn" data-lang="hy">🇦🇲 HY</button>
+                <button class="lang-btn" data-lang="en">🇺🇸 EN</button>
+                <button class="lang-btn" data-lang="ru">🇷🇺 RU</button>
+            </div>
+            <h1 data-i18n="calc_header">🧮 Խելացի Հաշվիչ</h1>
+            <p class="subtitle" data-i18n="calc_subtitle">Հաշվարկներ ճշգրիտ $\pi$-ով</p>
+            <nav>
+                <a href="index.html" data-i18n="nav_theory">📚 Տեսություն</a>
+                <a href="interactive.html" data-i18n="nav_interactive">🎮 Ինտերակտիվ Մոդել</a>
+                <a href="calculator.html" class="active" data-i18n="nav_calc">🧮 Հաշվիչ</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="calculator-section">
+                <div class="calc-controls">
+                    <div class="calc-group">
+                        <label for="shapeSelect" data-i18n="calc_select_shape">Ընտրեք Մարմինը</label>
+                        <select id="shapeSelect">
+                            <option value="cylinder" data-i18n="opt_cyl">Գլան</option>
+                            <option value="cone" data-i18n="opt_cone">Կոն</option>
+                            <option value="frustum" data-i18n="opt_frustum">Հատած Կոն</option>
+                            <option value="sphere" data-i18n="opt_sphere">Գունդ</option>
+                            <option value="segment" data-i18n="opt_segment">Գնդային Սեգմենտ</option>
+                            <option value="sector" data-i18n="opt_sector">Գնդային Սեկտոր</option>
+                            <option value="layer" data-i18n="opt_layer">Գնդային Շերտ</option>
+                            <option value="zone" data-i18n="opt_zone">Գնդային Գոտի</option>
+                        </select>
+                    </div>
+
+                    <div id="dynamicInputs" class="calc-group">
+                        <!-- Inputs will be injected here -->
+                    </div>
+
+                    <button id="calcBtn" class="calc-btn" data-i18n="btn_calc">Հաշվել</button>
+                </div>
+
+                <div id="calcResult" class="calc-result">
+                    <span data-i18n="calc_waiting">Արդյունքը կհայտնվի այստեղ...</span>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p data-i18n="footer">
+                &copy; 2025 | Ստեղծված է Գրիշա Խումարյանի և Կարեն Պողոսյանի կողմից | Գունդ և նրա մասերը
+            </p>
+        </footer>
+    </div>
+    <script src="static/js/translations.js"></script>
+    <script src="static/js/calculator.js"></script>
+</body>
+
+</html>
