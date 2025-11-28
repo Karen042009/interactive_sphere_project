@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="hy" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Պտտական Մարմիններ | Math Project</title>
+    <link rel="icon" type="image/svg+xml" href="static/rotational_favicon.png">
+    <link rel="stylesheet" href="static/css/rotational_style.css">
+    <link rel="stylesheet" href="static/css/rotational_style_additions.css">
+
+    <!-- MathJax Configuration (MUST BE BEFORE LOADING MATHJAX) -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)'], ['$', '$']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Armenian:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Decorative animated background shapes -->
+    <div class="bg-shapes" aria-hidden="true">
+        <div class="bg-shape"
+            style="width:380px; height:380px; left:-80px; top:-60px; animation-duration:28s; opacity:0.12;"></div>
+        <div class="bg-shape"
+            style="width:240px; height:240px; right:-60px; top:80px; animation-duration:20s; opacity:0.08;"></div>
+        <div class="bg-shape"
+            style="width:420px; height:420px; right:-140px; bottom:-120px; animation-duration:36s; opacity:0.09;"></div>
+        <div class="bg-shape"
+            style="width:180px; height:180px; left:40%; top:40%; animation-duration:24s; opacity:0.06;"></div>
+    </div>
+
+    <!-- Նավիգացիա -->
+    <nav class="navbar">
+        <div class="logo"><i class="fas fa-shapes"></i> MATHEMATICS</div>
+
+        <div class="nav-right">
+            <ul class="nav-links">
+                <li onclick="location.href='index.html'" data-i18n="nav_sphere">🌐 Գունդ</li>
+                <li onclick="showPage('theory')" data-i18n="nav_theory">Տեսություն</li>
+                <li onclick="showPage('applications')" data-i18n="nav_apps">Կիրառություններ</li>
+                <li onclick="showPage('calculator')" data-i18n="nav_calc">Հաշվիչ</ li>
+                <li onclick="showPage('models')" data-i18n="nav_models">Մոդելներ</li>
+            </ul>
+
+            <div class="controls">
+                <div id="langControls" role="group" aria-label="Language selection">
+                    <select id="langSelect" aria-label="Select language" title="Language">
+                        <option value="hy">🇦🇲 HY</option>
+                        <option value="ru">🇷🇺 RU</option>
+                        <option value="en">🇬🇧 EN</option>
+                    </select>
+                </div>
+                <button class="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <button class="theme-btn" onclick="toggleTheme()"><i class="fas fa-sun"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobileMenuOverlay" class="mobile-menu-overlay">
+        <div class="mobile-menu-content">
+            <button class="close-menu-btn" onclick="toggleMobileMenu()">&times;</button>
+            <ul id="mobileMenuLinks" class="mobile-menu-links">
+                <!-- Links will be populated by JS -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Էջ 1: Տեսություն -->
+    <section id="theory" class="page active">
+        <div class="container">
+            <h1 class="fancy-heading" data-i18n="theory_title">Պտտական Մարմիններ. Ամբողջական Տեսական Դասընթաց</h1>
+            <p class="intro-text" data-i18n="theory_intro">Պտտական մարմինները երկրաչափության հիմնասյուներից են...</p>
+            <div id="theory-content"></div>
+        </div>
+    </section>
+
+    <!-- Էջ 2: Կիրառություններ -->
+    <section id="applications" class="page">
+        <div class="container">
+            <h1 class="fancy-heading" data-i18n="apps_title">Օպտիմալ Կիրառություններ Կյանքում</h1>
+            <p class="intro-text" data-i18n="apps_intro">Ինչու՞ են առօրյա իրերը հենց այսպիսին: Պատասխանը թաքնված է
+                մաթեմատիկական օպտիմալության մեջ:</p>
+            <div class="app-grid" id="appGrid"></div>
+        </div>
+    </section>
+
+    <!-- Modal Overlay -->
+    <div id="appModal" class="modal-overlay" onclick="if(event.target === this) closeAppDetail()">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeAppDetail()">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Էջ 3: Հաշվիչ -->
+    <section id="calculator" class="page">
+        <div class="container">
+            <h1 class="fancy-heading" data-i18n="calc_title">Խելացի Հաշվիչ</h1>
+
+            <div class="calc-wrapper">
+                <div class="calc-controls">
+                    <label data-i18n="calc_select">Ընտրեք Մարմինը.</label>
+                    <select id="shapeSelect" onchange="updateCalcInputs()">
+                        <option value="cylinder" data-i18n="opt_cyl">Գլան</option>
+                        <option value="cone" data-i18n="opt_cone">Կոն</option>
+                        <option value="frustum" data-i18n="opt_frustum">Հատած Կոն</option>
+                        <option value="sphere" data-i18n="opt_sphere">Գունդ</option>
+                        <option value="segment" data-i18n="opt_segment">Գնդային Սեգմենտ</option>
+                        <option value="sector" data-i18n="opt_sector">Գնդային Սեկտոր</option>
+                        <option value="layer" data-i18n="opt_layer">Գնդային Շերտ</option>
+                        <option value="zone" data-i18n="opt_zone">Գնդային Գոտի</option>
+                    </select>
+                </div>
+
+                <div id="calcInputs" class="calc-inputs"></div>
+
+                <!-- Calculator Keypad - Scientific -->
+                <div class="calc-keypad">
+                    <button class="calc-key special" onclick="insertToInput('sin(')">sin</button>
+                    <button class="calc-key special" onclick="insertToInput('cos(')">cos</button>
+                    <button class="calc-key special" onclick="insertToInput('tan(')">tan</button>
+                    <button class="calc-key special" onclick="insertToInput('√(')">√</button>
+                    <button class="calc-key special" onclick="insertToInput('log(')">log</button>
+
+                    <button class="calc-key special" onclick="insertToInput('ln(')">ln</button>
+                    <button class="calc-key special" onclick="insertToInput('e')">e</button>
+                    <button class="calc-key special" onclick="insertToInput('π')">π</button>
+                    <button class="calc-key special" onclick="insertToInput('²')">x²</button>
+                    <button class="calc-key special" onclick="insertToInput('³')">x³</button>
+
+                    <button class="calc-key" onclick="insertToInput('7')">7</button>
+                    <button class="calc-key" onclick="insertToInput('8')">8</button>
+                    <button class="calc-key" onclick="insertToInput('9')">9</button>
+                    <button class="calc-key operator" onclick="insertToInput('/')">/</button>
+                    <button class="calc-key special" onclick="insertToInput('(')">(</button>
+
+                    <button class="calc-key" onclick="insertToInput('4')">4</button>
+                    <button class="calc-key" onclick="insertToInput('5')">5</button>
+                    <button class="calc-key" onclick="insertToInput('6')">6</button>
+                    <button class="calc-key operator" onclick="insertToInput('*')">×</button>
+                    <button class="calc-key special" onclick="insertToInput(')')">)</button>
+
+                    <button class="calc-key" onclick="insertToInput('1')">1</button>
+                    <button class="calc-key" onclick="insertToInput('2')">2</button>
+                    <button class="calc-key" onclick="insertToInput('3')">3</button>
+                    <button class="calc-key operator" onclick="insertToInput('-')">−</button>
+                    <button class="calc-key special" onclick="insertToInput('!')">!</button>
+
+                    <button class="calc-key" onclick="insertToInput('0')">0</button>
+                    <button class="calc-key" onclick="insertToInput('.')">.</button>
+                    <button class="calc-key operator" onclick="insertToInput('+')">+</button>
+                    <button class="calc-key special" onclick="insertToInput('^')">^</button>
+                    <button class="calc-key clear" onclick="clearCurrentInput()">C</button>
+                </div>
+
+                <button class="calc-btn" onclick="calculate()" data-i18n="btn_calc">Հաշվել</button>
+
+                <div id="calcResult" class="calc-result"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Էջ 4: 3D Մոդելավորում -->
+    <section id="models" class="page">
+        <div class="model-ui">
+            <button id="closeModelUI" class="close-model-ui" aria-label="Close parameters"
+                onclick="toggleModelUI(false)">&times;</button>
+            <h2 data-i18n="model_lab">3D Լաբորատորիա</h2>
+
+            <div class="control-group">
+                <label data-i18n="model_shape">Մարմին:</label>
+                <select id="modelType" onchange="changeModel()">
+                    <option value="cylinder" data-i18n="opt_cyl">Գլան</option>
+                    <option value="cone" data-i18n="opt_cone">Կոն</option>
+                    <option value="frustum" data-i18n="opt_frustum">Հատած Կոն</option>
+                    <option value="sphere" data-i18n="opt_sphere">Գունդ</option>
+                    <option value="segment" data-i18n="opt_segment">Գնդային Սեգմենտ</option>
+                    <option value="sector" data-i18n="opt_sector">Գնդային Սեկտոր</option>
+                    <option value="zone" data-i18n="opt_zone">Գնդային Գոտի</option>
+                    <option value="layer" data-i18n="opt_layer">Գնդային Շերտ</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label data-i18n="model_color">Գույն:</label>
+                <input type="color" id="meshColor" value="#9c27b0" oninput="updateMaterial()">
+            </div>
+
+            <div class="control-group">
+                <label data-i18n="model_mode">Ռեժիմ:</label>
+                <button onclick="toggleWireframe()" data-i18n="btn_wireframe">Կմախք / Հոծ</button>
+            </div>
+
+            <div class="control-group">
+                <label data-i18n="model_slice">Հատում (Slicing):</label>
+                <input type="range" id="sliceLevel" min="-5" max="5" step="0.1" value="5" oninput="updateSlice()">
+            </div>
+
+            <div class="control-group" id="dynamicParams"></div>
+        </div>
+
+        <div id="canvas-container"></div>
+        <button id="openModelUI" class="open-model-ui" aria-label="Open parameters"
+            onclick="toggleModelUI(true)">⚙</button>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p data-i18n="footer_copy">&copy; 2025 Rotational Solids Project. All Rights Reserved.</p>
+        <p data-i18n="footer_created">Created by <strong>Antigravity AI</strong></p>
+    </footer>
+
+    <script src="static/js/rotational_script.js"></script>
+
+    <script>
+        // Calculator keypad functions
+        let activeInput = null;
+
+        document.addEventListener('click', (e) => {
+            if (e.target.matches('#calcInputs input')) {
+                activeInput = e.target;
+            }
+        });
+
+        window.insertToInput = function (value) {
+            if (!activeInput) {
+                activeInput = document.querySelector('#calcInputs input');
+            }
+            if (activeInput) {
+                const cursorPos = activeInput.selectionStart;
+                const currentValue = activeInput.value;
+                activeInput.value = currentValue.slice(0, cursorPos) + value + currentValue.slice(cursorPos);
+                activeInput.selectionStart = activeInput.selectionEnd = cursorPos + value.length;
+                activeInput.focus();
+            }
+        };
+
+        window.clearCurrentInput = function () {
+            if (activeInput) {
+                activeInput.value = '';
+                activeInput.focus();
+            }
+        };
+
+        const originalUpdateCalcInputs = window.updateCalcInputs;
+        window.updateCalcInputs = function () {
+            if (originalUpdateCalcInputs) {
+                originalUpdateCalcInputs();
+                setTimeout(() => {
+                    activeInput = document.querySelector('#calcInputs input');
+                    if (activeInput) activeInput.focus();
+                }, 50);
+            }
+        };
+    </script>
+</body>
+
+</html>

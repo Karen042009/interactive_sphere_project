@@ -1,0 +1,135 @@
+/* Calculator and 3D Model Styles */
+
+.calc-btn {
+    width: 100%;
+    padding: 20px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 25px;
+    animation: pulse 2s infinite;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.calc-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(156, 39, 176, 0.6);
+    animation: none;
+}
+
+.calc-result {
+    margin-top: 40px;
+    padding: 30px;
+    background: linear-gradient(135deg, rgba(156, 39, 176, 0.25), rgba(74, 20, 140, 0.25));
+    backdrop-filter: blur(10px);
+    color: var(--text-main);
+    border-radius: 20px;
+    font-family: 'Consolas', monospace;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    border: 2px solid var(--accent);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Ensure MathJax elements are visible */
+.calc-result mjx-container,
+.calc-result mjx-container svg,
+.calc-result mjx-container * {
+    color: var(--text-main) !important;
+    fill: var(--text-main) !important;
+}
+
+.calc-result small {
+    color: var(--text-muted);
+}
+
+/* 3D Մոդելավորում */
+#models {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    padding-top: 0;
+    background: radial-gradient(circle at center, var(--bg-body));
+}
+
+.model-ui {
+    position: absolute;
+    top: 100px;
+    left: 40px;
+    width: 340px;
+    background: var(--glass);
+    padding: 35px;
+    border-radius: 25px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--border);
+    max-height: calc(100vh - 140px);
+    overflow-y: auto;
+    animation: slideInUp 1s ease-out;
+    color: var(--text-main);
+    z-index: 2004;
+}
+
+/* Calculator Keypad Styles - 5 columns for scientific functions */
+.calc-keypad {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-top: 20px;
+    padding: 20px;
+    background: rgba(156, 39, 176, 0.05);
+    border-radius: 15px;
+    border: 1px solid var(--accent);
+}
+
+.calc-key {
+    padding: 12px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    user-select: none;
+}
+
+.calc-key:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(156, 39, 176, 0.4);
+}
+
+.calc-key:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.calc-key.operator {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+}
+
+.calc-key.special {
+    background: linear-gradient(135deg, #4ecdc4 0%, #44a8b3 100%);
+}
+
+.calc-key.clear {
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+}
+
+.calc-key.wide {
+    grid-column: span 2;
+}
+
+/* Active input indicator */
+.calc-inputs input:focus {
+    box-shadow: 0 0 0 3px rgba(156, 39, 176, 0.3);
+    border-color: var(--accent);
+}
